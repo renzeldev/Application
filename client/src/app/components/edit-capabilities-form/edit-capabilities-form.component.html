@@ -1,0 +1,171 @@
+<!-- <div @slide-in class="capabilities-form"> -->
+<div class="capabilities-form">
+    <mat-toolbar class="capabilities-form_header" color="primary">
+        <h1>Edit a Capability</h1>
+    </mat-toolbar>
+    <div class="capabilities-form_fields">
+        <mat-horizontal-stepper [linear]='true' color='accent'>
+            <mat-step [stepControl]='forms.capability'>
+                <form [formGroup]='forms.capability'>
+                    <ng-template matStepLabel>Capability</ng-template>
+                    <mat-form-field>
+                        <mat-label>name</mat-label>
+                        <input matInput formControlName='name' />
+                        <mat-error *ngIf='forms.capability.get("name").value !== ""'>That capability name already exists</mat-error>
+                    </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>category name</mat-label>
+                            <mat-select formControlName='category'>
+                                <mat-option *ngFor="let category of categoryOptions" [value]="category">
+                                    {{ category }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>description</mat-label>
+                        <input matInput formControlName='description' />
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName='state'>
+                            <mat-option *ngFor="let state of stateOptions" [value]="state">
+                                {{ state }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="capabilities-form_field-controls --single">
+                        <button mat-raised-button matStepperNext color="primary">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]='forms.details'>
+                <form [formGroup]='forms.details'>
+                    <mat-form-field class="example-chip-list">
+                        <ng-template matStepLabel>Details</ng-template>
+                        <mat-chip-list #tags formControlName='tags'>
+                            <mat-chip *ngFor="let tag of forms.details.controls['tags'].value"
+                            [selectable]="true" [removable]="true" (removed)="remove(tag, 'tags', 'details')">
+                                {{tag}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="tags (comma seperated)"
+                                    [matChipInputFor]="tags"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="true"
+                                    (matChipInputTokenEnd)="add($event, 'tags', 'details')">
+                        </mat-chip-list>
+                    </mat-form-field>
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #supportingDocuments formControlName='supportingDocuments'>
+                            <mat-chip *ngFor="let tag of forms.details.controls['supportingDocuments'].value"
+                            [selectable]="true" [removable]="true" (removed)="remove(tag, 'supportingDocuments', 'details')">
+                                {{tag}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="supporting documents (comma seperated)"
+                                    [matChipInputFor]="supportingDocuments"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="true"
+                                    (matChipInputTokenEnd)="add($event, 'supportingDocuments', 'details')">
+                        </mat-chip-list>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>BEAM compound semantic version</mat-label>
+                            <input matInput formControlName='beamCompoundSemanticVersion' />
+                        </mat-form-field>
+                    <div class="capabilities-form_field-controls">
+                        <button mat-raised-button matStepperPrevious>Previous</button>
+                        <button mat-raised-button matStepperNext color="primary">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]='forms.softwareLevels'>
+                <form [formGroup]='forms.softwareLevels' (ngSubmit)='handleSubmit()'>
+                    <ng-template matStepLabel>Software levels</ng-template>
+                    <div formArrayName='minimumSoftwareLevels'
+                     *ngFor='let item of getFormArray("minimumSoftwareLevels", "softwareLevels").controls; let i = index'>
+                        <div [formGroupName]='i'>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Component</mat-label>
+                                    <mat-select formControlName='component'>
+                                        <mat-option *ngFor="let component of componentOptions" [value]="component">
+                                            {{ component }}
+                                        </mat-option>
+                                    </mat-select>
+                            </mat-form-field>
+                            <div formArrayName='deploymentPackage' *ngFor='let item of getFormArray("deploymentPackage", "softwareLevels", i).controls; let j = index' class="deploymentPackage">
+                                <div [formGroupName]='j'>
+
+
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Deployment Package</mat-label>
+                                            <mat-select formControlName='name'>
+                                                <mat-option *ngFor="let name of packageOptions" [value]="name">
+                                                    {{ name }}
+                                                </mat-option>
+                                            </mat-select>
+                                    </mat-form-field>
+
+
+
+
+                                    <mat-form-field>
+                                        <mat-label>minimum version</mat-label>
+                                        <input matInput formControlName='minimumVersion' />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="example-chip-list">
+                                        <mat-chip-list #packageLink formControlName='packageLink'>
+                                            <mat-chip *ngFor="let item of item.controls['packageLink'].value" [selectable]="true"
+                                            [removable]="true" (removed)="remove(item, 'packageLink', 'softwareLevels', i, j)">
+                                                {{item}}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                            <input placeholder="Package link (comma seperated)"
+                                                    [matChipInputFor]="packageLink"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                    [matChipInputAddOnBlur]="true"
+                                                    (matChipInputTokenEnd)="add($event, 'packageLink', 'softwareLevels', i, j)">
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf='getFormArray("deploymentPackage", "softwareLevels", i).controls.length > 1'
+                                    class="divider-container">
+                                    <mat-divider></mat-divider>
+                                </div>
+                            </div>
+
+
+                            <div class="capabilities-form_field-package-controls">
+                                <button type="button" (click)='addDeploymentPackageField(i)' mat-raised-button color="primary">
+                                    add package
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="capabilities-form_field-controls">
+                        <button (click)='addMinimumSoftwareLevelField("softwareLevels")' mat-raised-button color="primary" type="button">
+                            add field
+                        </button>
+                        <!-- <button *ngIf='getFormArray("minimumSoftwareLevels", "softwareLevels").controls.length > 1'
+                            (click)='removeMinimumSoftwareLevelField("softwareLevels")' mat-raised-button color="warn">
+                            remove field
+                        </button> -->
+                    </div>
+                    <div class="divider-container">
+                        <mat-divider></mat-divider>
+                    </div>
+                    <div class="capabilities-form_field-controls">
+                        <button mat-raised-button matStepperPrevious>Previous</button>
+                        <button class="submit-button" mat-raised-button color="accent">Update</button>
+                    </div>
+                </form>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+    <!-- <div class="capabilities-form_controls">
+        <button (click)='handleBack()' mat-button>back</button>
+        <button (click)='handleNext()' mat-raised-button color="primary">{{ nextButtonText }}</button>
+    </div> -->
+</div>

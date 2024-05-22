@@ -1,0 +1,7 @@
+<div class="capability-delete-dialog">
+    <h1>Are you sure you want to delete '{{ this.data.capability.name }}'?</h1>
+    <div class="capability-delete-dialog__buttons-container">
+        <button (click)='setShouldDelete(false)' mat-raised-button color="primary">cancel</button>
+        <button (click)='setShouldDelete(true)' mat-raised-button color="warn">delete</button>
+    </div>
+</div>

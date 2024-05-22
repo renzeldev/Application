@@ -1,0 +1,68 @@
+@import "~@angular/material/theming";
+
+.capabilities-form {
+    width: 600px;
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
+    max-height: 90vh;
+
+    .capabilities-form_header {
+        h1 {
+            font-weight: 600;
+        }
+    }
+
+    .capabilities-form_fields {
+        padding: 15px 20px 0;
+        background-color: inherit;
+
+        mat-form-field {
+            display: inline;
+        }
+    }
+
+    .capabilities-form_controls {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            font-weight: 400;
+        }
+    }
+
+    .divider-container {
+        margin: 40px 0 30px;
+    }
+
+    .deploymentPackage {
+        margin-left: 50px;
+    }
+
+    .capabilities-form_field-controls {
+        margin: 20px 0 0;
+        display: flex;
+        justify-content: space-between;
+
+        &.--single {
+            justify-content: flex-end;
+        }
+
+        button {
+            font-weight: 400;
+        }
+    }
+    .capabilities-form_field-package-controls {
+        text-align: right;
+        margin: 10px 0;
+        justify-content: space-between;
+
+        &.--single {
+            justify-content: flex-end;
+        }
+
+        button {
+            font-weight: 400;
+        }
+    }
+}

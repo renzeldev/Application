@@ -1,0 +1,11 @@
+<div class="category-item">
+    <div class="category-item__header">
+        <h1 class="category-item__title">{{ category.title }}</h1>
+        <span (click)='handleCategoryCollapse()' class="category-item__collapse">{{ collapsed ? '+' : '-' }}</span>
+    </div>
+    <div class="category-item__categories" *ngIf='!collapsed'>
+        <div class="category-item__category" *ngFor='let categoryName of category.categories'>
+            <mat-checkbox [checked]='checkedCategories.includes(categoryName)' (change)='handleCheckboxChange($event, categoryName)'>{{ categoryName }}</mat-checkbox>
+        </div>
+    </div>
+</div>

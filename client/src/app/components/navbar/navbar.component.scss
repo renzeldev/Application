@@ -1,0 +1,45 @@
+.header {
+    padding: 10px;
+
+    img {
+        max-height: 100%;
+        width: 30px;
+        color: white;
+        filter: invert(1);
+        height: 30px;
+
+        &.logo {
+            margin-right: 15px;
+        }
+    }
+
+    .home-link {
+        text-decoration: none;
+        color: inherit;
+        display: contents;
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+        font-size: 17px
+    }
+
+    mat-toolbar-row {
+        padding: 15px;
+    }
+
+    .links {
+        display: flex;
+        position: absolute;
+        right: 0;
+        margin: 0 20px;
+
+        a {
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            text-transform: capitalize;
+            font-weight: 300;
+            font-size: 16px;
+        }
+    }
+}

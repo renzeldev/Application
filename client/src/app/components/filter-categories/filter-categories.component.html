@@ -1,0 +1,42 @@
+<div class="filter-categories">
+    <div class="filter-categories__header">
+        <h1>{{ title || "Filter by" }}</h1>
+    </div>
+    <div class="filter-categories_controls">
+        <button
+            (click)='clearCheckedTags()'
+            class="filter-categories_controls_button filter-categories_controls_button--small"
+            mat-stroked-button
+        >
+            clear all
+        </button>
+        <button
+            (click)='handleCollapseToggle()'
+            class="filter-categories_controls_button filter-categories_controls_button--small"
+            mat-stroked-button
+        >
+            {{ collapsedTags.length ? 'expand all' : 'collapse all' }}
+        </button>
+    </div>
+    <div class="filter-categories__filter-items">
+        <app-filter-tags-item
+            [tags]='tags'
+            [collapsed]='collapsedTags.length'
+            [checkedTags]='checkedTags || []'
+            (onCheckboxChange)='handleCheckboxChange($event, tags)'
+            (onCollapseChange)='handleCollapseChange($event)'
+        >
+        </app-filter-tags-item>
+
+        <app-filter-categories-list
+            [categoryOptions]='categoryOptions'
+            [collapsed]='collapsedTags.length'
+            [checkedCategories]='checkedCategories || []'
+            (onCheckboxChange)='handleCategoryCheckboxChange($event, categoryOptions)'
+            (onCollapseChange)='handleCategoryCollapseChange($event)'
+        >
+        </app-filter-categories-list>
+
+        
+    </div>
+</div>

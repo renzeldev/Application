@@ -1,0 +1,10 @@
+#Dockerfile fr building a container for running tests against the API
+FROM python:3.8-slim-buster
+
+WORKDIR /usr/src/app
+
+COPY ./test/ .
+
+RUN pip install pytest requests
+
+CMD ["pytest"]

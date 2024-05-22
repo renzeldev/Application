@@ -1,0 +1,69 @@
+@import "~@angular/material/theming";
+
+// Ericsson hilda font
+@font-face {
+    font-family: 'Ericsson-Hilda';
+    src: url('./assets/fonts/EricssonHilda-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ericsson-Hilda';
+    src: url('./assets/fonts/EricssonHilda-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ericsson-Hilda';
+    src: url('./assets/fonts/EricssonHilda-Bold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ericsson-Hilda';
+    src: url('./assets/fonts/EricssonHilda-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* The material library has optimized its fonts for the roboto font.
+ * The ericsson hilda font looks smaller when at their font size, adjusted it here
+*/
+button,
+button[mat-button]
+button[mat-raised-button],
+button[mat-stroked-button],
+button[mat-flat-button],
+button.mat-raised-button,
+button.mat-button,
+button.mat-stroked-button
+button.mat-flat-button {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+$ericsson-typography: mat-typography-config(
+    $font-family: 'Ericsson-Hilda',
+    $headline: mat-typography-level(32px, 48px, 700),
+    $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+@include mat-core($ericsson-typography);
+
+$ericsson-theme-primary: mat-palette($mat-grey, 900);
+$ericsson-theme-accent: mat-palette($mat-blue, A200, A100, A400);
+$ericsson-theme-warn: mat-palette($mat-red);
+
+$ericsson-theme: mat-light-theme($ericsson-theme-primary, $ericsson-theme-accent, $ericsson-theme-warn);
+
+html {
+    @include angular-material-theme($ericsson-theme);
+}
+
+// When the font-size changes it causes the elments to shift around
+.mat-step-label-selected {
+    font-size: unset;
+}

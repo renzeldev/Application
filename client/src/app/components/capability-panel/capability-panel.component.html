@@ -1,0 +1,49 @@
+<div class="capability-panel" (click)='handlePanelClick(capability.id)'>
+
+
+    <h2 class="title">{{ capability.name }}</h2>
+    <p class="category">{{ capability.category }}</p>
+
+    <div style="display:flex;" class="new">
+    <div class="list" *ngFor='let softwareLevel of capability.minimumSoftwareLevels'>
+        <div style="margin-right:10px;" class="nrt">
+            <div class="nrt2">
+                <p>{{ softwareLevel.component }}</p>
+        </div>
+    </div>
+
+    </div>
+</div>
+    <mat-divider class="divider"></mat-divider>
+    <div *ngIf="capability.state == 'Published'">
+        <div class="img-div">
+            <img style="display:inline;" width='30px;'  src="../../../assets/img/ready.png">
+            <p style="display:inline-block; white-space:nowrap; vertical-align:top; margin:5px;">{{ capability.state }}</p>
+        </div>
+
+        <div style="border: 5px solid rgb(26, 69, 130); width: 100%;"></div>
+    </div>
+
+
+
+    <div *ngIf="capability.state == 'Deprecated'">
+        <div class="img-div">
+
+        <img style="display:inline;" width='30px;'  src="../../../assets/img/deb2.png">
+
+        <p style="display:inline-block; white-space:nowrap; vertical-align:top; margin:5px;">{{ capability.state }}</p>
+    </div>
+
+        <div style="border: 5px solid rgb(226, 87, 76); width: 100%;"></div>
+
+    </div>
+    <div *ngIf="capability.state == 'New'">
+        <img style="display:inline;" width='50px;'  src="../../../assets/img/new.jpg">
+        <p style="display:inline-block; white-space:nowrap; vertical-align:top; margin-top:10px;">{{ capability.state }}</p>
+        <div style="border: 5px solid rgb(33, 33, 33); width: 100%;"></div>
+    </div>
+
+    <mat-divider class="divider"></mat-divider>
+    <p class="description">{{ capability.description }}</p>
+
+</div>

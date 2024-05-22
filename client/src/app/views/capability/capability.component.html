@@ -1,0 +1,80 @@
+<div>
+    <section class="sub-header">
+        <div class="sub-header_container">
+            <div class="button-container">
+                <button mat-raised-button color="accent" (click)='handleOpenCapabilityForm()'>Edit Capability</button>
+                <button (click)='openConfirm()' mat-raised-button color="warn">Delete capability</button>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+    </section>
+    <main class="capability-container" *ngIf='capability'>
+        <div class="capability">
+            <h1 class="title">{{ capability.name }}</h1>
+            <p class="description">{{ capability.description }}</p>
+            <div *ngIf="!capability.deleted">
+            <span class="state">{{ capability.state }}</span>
+            </div>
+            <div *ngIf="capability.deleted">
+            <span class="deleted-state">Deleted</span>
+            </div>
+
+        </div>
+        <div class="details">
+            <div class="overview">
+                <div class="table two-column">
+                    <section>
+                        <h4>Overview</h4>
+                        <div class="row">
+                            <p>BEAM compound semantic version</p>
+                            <p>{{ capability.beamCompoundSemanticVersion }}</p>
+                        </div>
+                        <div class="row" *ngFor="let item of capability.supportingDocuments">
+                        <p>Supporting documents</p>
+                            <a style="text-align:left;" href='{{ item }}'>{{ item }}</a>
+                    </div>
+                        <div class="row">
+                            <p>Category</p>
+                            <p>{{ capability.category }}</p>
+                        </div>
+                        <div class="row">
+                            <p>Tags</p>
+                            <p>{{ capability.tags }}</p>
+                        </div>
+                    </section>
+                    <section>
+                        <h4>Minimum software levels</h4>
+                        <div class="list" *ngFor='let softwareLevel of capability.minimumSoftwareLevels'>
+                            <div class="row">
+                                <p>Component</p>
+                                <p>{{ softwareLevel.component }}</p>
+                            </div>
+                            <div class="row">
+                                <p>Deployment Package</p>
+                                <p></p>
+                            </div>
+                            <div *ngFor="let package of softwareLevel.deploymentPackage" class="packageList">
+                                <div class="row ml-10">
+                                    <p>Name</p>
+                                    <p>{{package.name}}</p>
+                                </div>
+                                <div class="row ml-10">
+                                    <p>Minimum Version</p>
+                                    <p>{{package.minimumVersion}}</p>
+                                </div>
+                                <div *ngFor="let item of package.packageLink; let i=index" class="row ml-10">
+
+                                    <p *ngIf="i == 0">Package Links</p>
+                                    <p *ngIf="i > 0"></p>
+
+                                    <p> <a  href='{{ item }}'>{{ item }} </a> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <mat-spinner class="loading" *ngIf="!capability"></mat-spinner>
+</div>

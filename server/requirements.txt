@@ -1,0 +1,11 @@
+Flask>=1.1.2
+flask-mongoengine>=0.9.5
+Flask-PyMongo>=2.3.0
+Flask-RESTful>=0.3.8
+Flask-WTF>=0.14.3
+mongoengine-goodjson>=1.1.8
+PyJWT>=1.7.1
+pytest>=5.0.0
+requests>=2.24.0
+setuptools>=49.1.0
+wheel>=0.34.2

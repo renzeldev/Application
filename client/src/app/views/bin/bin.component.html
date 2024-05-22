@@ -1,0 +1,12 @@
+<div>
+    <section class="sub-header">
+        <div class="sub-header_container">
+        </div>
+        <mat-divider></mat-divider>
+    </section>
+    <main class="home">
+        <app-filter-categories (filterCategoriesChange)='setCategoriesFilter($event)' (filterTagsChange)='setTagsFilter($event)' [capabilityEvents]='capabilities'></app-filter-categories>
+        <app-capabilities-bin-board [search]='search' [categoriesFilter]='categoriesFilter' [tagsFilter]='tagsFilter' (capabilitiesLoaded)='setCapabilites($event)' [updateCapabilities]='updateCababilites'></app-capabilities-bin-board>
+
+    </main>
+</div>

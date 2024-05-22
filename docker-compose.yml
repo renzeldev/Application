@@ -1,0 +1,92 @@
+version: "3.4"
+
+networks:
+  capabilities-marketplace:
+
+services:
+  # api-server-dev:
+  #   restart: always
+  #   environment:
+  #     DATABASE: "database"
+  #     FLASK_ENV: "dev"
+  #     PYTHONDONTWRITEBYTECODE: 1
+  #   container_name: "api-server"
+  #   image: capability-api:dev
+  #   build:
+  #     context: "./server"
+  #     dockerfile: "Dockerfile"
+  #     target: dev
+  #   ports:
+  #     - 5000:5000
+  #   volumes:
+  #     - ./server/API:/usr/src/app/API
+  #   networks:
+  #     capabilities-marketplace:
+  #   links:
+  #     - dev-database:database
+  client:
+      build: ./client
+      ports:
+          - 4200
+      networks:
+          capabilities-marketplace:
+      volumes:
+        # - ./client/node_modules
+        - ./client/src:/opt/client/src
+      links:
+          - api-server:api-server
+
+  api-server:
+    environment:
+      DATABASE: "database"
+      PORT: 5000
+    container_name: "api-server"
+    image: capability-api:prod
+    build:
+      context: "./server"
+      dockerfile: "Dockerfile"
+      target: dev
+    ports:
+      - 5000:5000
+    networks:
+      capabilities-marketplace:
+    links:
+      - database:database
+
+  # api-tests:
+  #   environment:
+  #     BASEURL: "http://api-server:5000"
+  #     PYTHONDONTWRITEBYTECODE: 1
+  #   container_name: "api-tests"
+  #   image: "api-testing:latest"
+  #   build:
+  #     context: "./server"
+  #     dockerfile: "Dockerfile.testing"
+  #   networks:
+  #     capabilities-marketplace:
+  #   links:
+  #     - api-server-dev:api-server
+
+  nginx:
+      image: nginx
+      logging: 
+          driver: none
+      ports:
+          - 80:80
+      networks:
+          capabilities-marketplace:
+      volumes:
+          - ./nginx/conf.d:/etc/nginx/conf.d
+      links:
+          - client
+          - api-server
+      depends_on:
+          - client
+          - api-server
+
+  database:
+      image: mongo:latest
+      ports:
+          - 27017:27017
+      networks:
+          capabilities-marketplace:

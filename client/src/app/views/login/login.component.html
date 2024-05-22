@@ -1,0 +1,4 @@
+<div class="container">
+    <button (click)='login()' *ngIf='!hasToken' mat-raised-button color="primary">Login</button>
+    <button (click)='logout()' *ngIf='hasToken' mat-raised-button color="warn">Log out</button>
+</div>
